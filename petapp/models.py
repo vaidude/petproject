@@ -90,7 +90,7 @@ class Pet(models.Model):
             super().save(*args, **kwargs)  # Save the object to generate an ID
 
         # Generate the pet detail URL for the QR code
-        pet_url = f"http://0.0.0.0:8000{reverse('pet_detail', args=[self.id])}"
+        pet_url = f"http://192.168.1.33:8000{reverse('pet_detail', args=[self.id])}"
 
         # Check if a QR code already exists, remove the old file if present
         if self.qr_code and os.path.exists(self.qr_code.path):
@@ -118,7 +118,7 @@ class Pet(models.Model):
         # Final save to ensure QR code is persisted
         super().save(*args, **kwargs)
 
-    def str(self):
+    def __str__(self):
         return self.name
 
 class Doctor(models.Model):
@@ -201,13 +201,18 @@ class UserPet(models.Model):
     def __str__(self):
         return f"{self.name} - {self.owner.name}"
     def save(self, *args, **kwargs):
-        super().save(*args, **kwargs)
+        # Ensure instance is saved once to generate an ID
+        if not self.id:
+            super().save(*args, **kwargs)  # Save the object to generate an ID
 
-        pet_url = f"http://0.0.0.0:8000{reverse('pet_detail', args=[self.id])}"
+        # Generate the pet detail URL for the QR code
+        pet_url = f"http://192.168.1.33:8000{reverse('pet_detail', args=[self.id])}"
 
+        # Check if a QR code already exists, remove the old file if present
+        if self.qr_code and os.path.exists(self.qr_code.path):
+            os.remove(self.qr_code.path)
 
-
-
+        # Create the QR code
         qr = qrcode.QRCode(
             version=1,
             error_correction=qrcode.constants.ERROR_CORRECT_L,
@@ -217,14 +222,20 @@ class UserPet(models.Model):
         qr.add_data(pet_url)
         qr.make(fit=True)
 
+        # Save the QR code image
         img = qr.make_image(fill='black', back_color='white')
-
         buffer = BytesIO()
         img.save(buffer, format='PNG')
         buffer.seek(0)
 
+        # Assign the QR code file to the field
         self.qr_code.save(f'pet_{self.id}_qrcode.png', File(buffer), save=False)
+
+        # Final save to ensure QR code is persisted
         super().save(*args, **kwargs)
+
+    def __str__(self):
+        return self.name
     
 class Vaccinations(models.Model):
     pet = models.ForeignKey(UserPet, on_delete=models.CASCADE, related_name="vaccinations")
