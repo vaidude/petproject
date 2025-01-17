@@ -1,0 +1,81 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Register</title>
+
+    <!-- Tailwind CSS CDN -->
+    <script src="https://cdn.tailwindcss.com"></script>
+</head>
+
+<body class="bg-gray-100">
+
+    <!-- Container -->
+    <div class="flex justify-center items-center min-h-screen bg-gray-50">
+        <div class="bg-white w-full max-w-md p-8 rounded-lg shadow-lg">
+            <h1 class="text-2xl font-semibold text-center text-gray-800 mb-6">Create New Shop</h1>
+
+            <form class="space-y-4" method="POST">
+                {% csrf_token %}
+
+                <!-- Shop Name -->
+                <div>
+                    <label for="floatingName" class="block text-sm font-medium text-gray-700">Shop Name</label>
+                    <input type="text" name="name" id="floatingName" class="mt-1 block w-full px-4 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent" placeholder="Shop name" required>
+                </div>
+
+                <!-- Email -->
+                <div>
+                    <label for="floatingEmail" class="block text-sm font-medium text-gray-700">Email Address</label>
+                    <input type="email" name="email" id="floatingEmail" class="mt-1 block w-full px-4 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent" placeholder="name@example.com" required>
+                </div>
+
+                <!-- Password -->
+                <div>
+                    <label for="floatingPassword" class="block text-sm font-medium text-gray-700">Password</label>
+                    <input type="password" name="password" id="floatingPassword" class="mt-1 block w-full px-4 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent" placeholder="Password (must contain letters and numbers)" required pattern="(?=.*[a-zA-Z])(?=.*\d).{6,}">
+                </div>
+
+                <!-- Location -->
+                <div>
+                    <label for="floatingLocation" class="block text-sm font-medium text-gray-700">Location</label>
+                    <input type="text" name="location" id="floatingLocation" class="mt-1 block w-full px-4 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent" placeholder="Location" required>
+                </div>
+
+                <!-- Phone Number -->
+                <div>
+                    <label for="floatingPhone" class="block text-sm font-medium text-gray-700">Phone Number</label>
+                    <input type="tel" name="phone" id="floatingPhone" class="mt-1 block w-full px-4 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent" placeholder="1234567890" required pattern="\d{10}">
+                </div>
+
+                <!-- Profile Picture -->
+                <div>
+                    <label for="product_pic" class="block text-sm font-medium text-gray-700">Profile Picture</label>
+                    <input type="file" name="product_pic" id="product_pic" class="mt-1 block w-full px-4 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent">
+                </div>
+
+                <!-- Submit Button -->
+                <div>
+                    <button type="submit" class="w-full py-2 bg-blue-600 text-white font-semibold rounded-lg shadow-md hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-offset-2">
+                        Register
+                    </button>
+                </div>
+
+                <!-- Login Link -->
+                <p class="text-center text-sm text-gray-500">
+                    Already have an account? 
+                    <a href="/shoplogin/" class="text-blue-600 hover:text-blue-800">Login</a>
+                </p>
+            </form>
+
+            <!-- Footer -->
+            <p class="mt-8 text-center text-xs text-gray-500">© 2017–2024</p>
+        </div>
+    </div>
+
+</body>
+
+</html>

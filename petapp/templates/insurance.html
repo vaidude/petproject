@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Pet Insurance Certificate</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+</head>
+<body class="bg-gray-100">
+
+    <div class="max-w-3xl mx-auto mt-10 bg-white shadow-lg rounded-lg p-6">
+        <div class="text-center border-b border-gray-300 pb-4">
+            <h1 class="text-3xl font-bold text-gray-700">Insurance Certificate</h1>
+            <p class="text-gray-500 text-sm">Details for <span class="font-semibold">{{ pet.name }}</span></p>
+        </div>
+
+        {% if insurance %}
+        <div class="py-6 space-y-4">
+            <p class="flex justify-between text-gray-700">
+                <span class="font-semibold">Provider:</span> <span>{{ insurance.provider }}</span>
+            </p>
+            <p class="flex justify-between text-gray-700">
+                <span class="font-semibold">Policy Number:</span> <span>{{ insurance.policy_number }}</span>
+            </p>
+            <p class="flex justify-between text-gray-700">
+                <span class="font-semibold">Coverage:</span> <span>{{ insurance.coverage }}</span>
+            </p>
+            <p class="flex justify-between text-gray-700">
+                <span class="font-semibold">Start Date:</span> <span>{{ insurance.start_date }}</span>
+            </p>
+            <p class="flex justify-between text-gray-700">
+                <span class="font-semibold">End Date:</span> <span>{{ insurance.end_date }}</span>
+            </p>
+            <p class="flex justify-between text-gray-700">
+                <span class="font-semibold">Price:</span> <span>${{ insurance.price }}</span>
+            </p>
+        </div>
+        {% else %}
+        <div class="py-6">
+            <p class="text-red-500 text-center">No insurance details available.</p>
+        </div>
+        {% endif %}
+
+        <div class="flex justify-between items-center border-t border-gray-300 pt-4">
+            <a href="{% url 'pet_insurance' pet.id %}" class="text-white bg-blue-500 hover:bg-blue-600 px-4 py-2 rounded-lg">
+                <i class="fas fa-pen"></i> Add/Update Insurance
+            </a>
+            <button onclick="window.print()" class="text-white bg-green-500 hover:bg-green-600 px-4 py-2 rounded-lg">
+                <i class="fas fa-download"></i> Download Certificate
+            </button>
+        </div>
+    </div>
+
+</body>
+</html>

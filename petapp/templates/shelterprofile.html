@@ -1,0 +1,146 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>User Profile</title>
+    {% load static %}
+    <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css" />
+    <style>
+        body {
+            background: url("") no-repeat center center fixed;
+            background-size:cover;
+        }
+
+        .card {
+            background: rgba(255, 255, 255, 0.8);
+            padding: 20px;
+            border-radius: 8px;
+            box-shadow: 0 5px 20px rgba(0, 0, 0, 0.1);
+            text-align: center;
+            width: 300px;
+            margin: auto;
+        }
+
+        .profile-pic {
+            width: 120px;
+            height: 120px;
+            border-radius: 50%;
+            margin-bottom: 15px;
+        }
+
+        .label {
+            font-weight: 600;
+            font-size: 1rem;
+            color: #333;
+        }
+
+        .text-lg {
+            font-size: 1rem;
+        }
+
+        .hover-effect:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 10px 15px rgba(0, 0, 0, 0.15);
+        }
+
+        .modal {
+            display: none;
+            position: fixed;
+            z-index: 50;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.5);
+            align-items: center;
+            justify-content: center;
+        }
+
+        .modal-content {
+            background-color: white;
+            padding: 15px;
+            border-radius: 8px;
+            box-shadow: 0 5px 20px rgba(0, 0, 0, 0.1);
+            width: 90%;
+            max-width: 400px;
+        }
+
+        .bg-gray-500 {
+            background-color: #6b7280;
+        }
+    </style>
+</head>
+
+<body class="flex items-center justify-center min-h-screen">
+
+    <div class="card">
+        <img src="https://png.pngtree.com/png-clipart/20220910/original/pngtree-pets-cat-and-dog-vector-png-image_8532344.png" alt="Pets Illustration" class="w-24 h-24 mx-auto">
+        
+        {% if user.profile_pic %}
+        <img src="{{ user.profile_pic.url }}" alt="Profile Picture" class="profile-pic">
+        {% else %}
+        <img src="https://static.vecteezy.com/system/resources/previews/020/765/399/non_2x/default-profile-account-unknown-icon-black-silhouette-free-vector.jpg" alt="Default Profile Picture" class="profile-pic">
+        {% endif %}
+
+        <h2 class="text-xl font-semibold mb-2">{{ user.name }}</h2>
+        <p class="text-sm text-gray-600 mb-4">{{ user.email }}</p>
+
+        <div class="text-left">
+            <p><span class="label">Location:</span> {{ user.location }}</p>
+            <p><span class="label">Phone:</span> {{ user.phone }}</p>
+        </div>
+
+        <div class="mt-4">
+            <button id="editProfileBtn" class="bg-gray-500 text-white px-4 py-2 rounded-lg w-full">Edit Profile</button>
+            <a href="/logout/" class="bg-red-500 text-white px-4 py-2 rounded-lg w-full mt-2 inline-block">Logout</a>
+            <a href="/shelterhome/" class="bg-gray-500 text-white px-4 py-2 rounded-lg w-full mt-2 inline-block">Home</a>
+        </div>
+    </div>
+
+    <!-- Modal for Edit Profile -->
+    <div id="editProfileModal" class="modal flex">
+        <div class="modal-content">
+            <span id="closeModal" class="cursor-pointer text-lg">&times;</span>
+            <h2>Edit Profile</h2>
+            <form method="POST" action="/editprofile/" enctype="multipart/form-data">
+                {% csrf_token %}
+                <label>Name</label>
+                <input type="text" name="name" class="border rounded w-full p-2" value="{{ user.name }}">
+                <label>Email</label>
+                <input type="email" name="email" class="border rounded w-full p-2" value="{{ user.email }}" readonly>
+                <label>Location</label>
+                <input type="text" name="location" class="border rounded w-full p-2" value="{{ user.location }}">
+                <label>Phone</label>
+                <input type="tel" name="phone" class="border rounded w-full p-2" value="{{ user.phone }}">
+                <label>Profile Picture</label>
+                <input type="file" name="profile_pic" class="border rounded w-full p-2">
+                <button type="submit" class="bg-blue-500 text-white px-4 py-2 rounded-lg w-full mt-4">Save Changes</button>
+            </form>
+        </div>
+    </div>
+
+    <script>
+        const modal = document.getElementById('editProfileModal');
+        const btn = document.getElementById('editProfileBtn');
+        const closeModal = document.getElementById('closeModal');
+
+        btn.onclick = function() {
+            modal.style.display = 'flex';
+        }
+
+        closeModal.onclick = function() {
+            modal.style.display = 'none';
+        }
+
+        window.onclick = function(event) {
+            if (event.target == modal) {
+                modal.style.display = 'none';
+            }
+        }
+    </script>
+</body>
+
+</html>

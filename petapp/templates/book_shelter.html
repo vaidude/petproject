@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Book a Shelter</title>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css">
+</head>
+<body class="bg-gray-100 text-gray-800">
+    <div class="container mx-auto p-8">
+        <h1 class="text-3xl font-bold mb-6">Available Shelters</h1>
+        {% if messages %}
+        <div class="bg-blue-500 text-white p-2 rounded mb-4 text-center">
+            {% for message in messages %}
+                <p>{{ message }}</p>
+            {% endfor %}
+        </div>
+    {% endif %}
+        <!-- Shelter List -->
+        <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+            {% for shelter in shelters %}
+            <div class="bg-white p-6 rounded shadow-md">
+                <h2 class="text-xl font-semibold mb-2">{{ shelter.name }}</h2>
+                <p><strong>Location:</strong> {{ shelter.location }}</p>
+                <p><strong>Available Slots:</strong> {{ shelter.available_slots }}</p>
+                <p><strong>Price Per Day:</strong> ${{ shelter.price_per_day }}</p>
+                <p><strong>Available From:</strong> {{ shelter.available_date|date:"F d, Y" }}</p>
+
+                <!-- Booking Form -->
+                {% if shelter.available_slots > 0 %}
+                <form method="post" class="mt-4">
+                    {% csrf_token %}
+                    <input type="hidden" name="shelter_id" value="{{ shelter.id }}">
+
+                    <label for="start_date" class="block mb-2">Start Date:</label>
+                    <input type="date" name="start_date" id="start_date" class="w-full p-2 border border-gray-300 rounded mb-4" required>
+
+                    <label for="end_date" class="block mb-2">End Date:</label>
+                    <input type="date" name="end_date" id="end_date" class="w-full p-2 border border-gray-300 rounded mb-4" required>
+
+                    <textarea name="details" rows="2" class="w-full p-2 border border-gray-300 rounded mb-2" placeholder="Enter any additional details (optional)..."></textarea>
+
+                    <button type="submit" class="bg-blue-500 text-white px-4 py-2 rounded hover:bg-blue-600">
+                        Book Shelter
+                    </button>
+                </form>
+                {% else %}
+                <p class="text-red-500 mt-4">No slots available</p>
+                {% endif %}
+            </div>
+            {% endfor %}
+        </div>
+    </div>
+</body>
+</html>

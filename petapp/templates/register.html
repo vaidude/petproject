@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Register</title>
+    
+    <!-- Tailwind CSS CDN -->
+    <script src="https://cdn.tailwindcss.com"></script>
+</head>
+
+<body class="bg-gray-100 flex justify-center items-center h-screen">
+
+    <div class="w-full max-w-md p-8 bg-white rounded-lg shadow-md">
+        <h1 class="text-2xl font-bold text-center mb-6 text-gray-800">Create New Account</h1>
+
+        <form class="space-y-4" method="POST">
+            {% csrf_token %}
+
+            <!-- Full Name Input -->
+            <div>
+                <label for="floatingName" class="block text-sm font-medium text-gray-700">Full Name</label>
+                <input type="text" name="name" id="floatingName" class="mt-2 p-3 w-full border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500" placeholder="User name" required>
+            </div>
+
+            <!-- Email Input -->
+            <div>
+                <label for="floatingEmail" class="block text-sm font-medium text-gray-700">Email Address</label>
+                <input type="email" name="email" id="floatingEmail" class="mt-2 p-3 w-full border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500" placeholder="name@example.com" required>
+            </div>
+
+            <!-- Password Input -->
+            <div>
+                <label for="floatingPassword" class="block text-sm font-medium text-gray-700">Password (must contain uppercase&lowercase letters and numbers)</label>
+                <input type="password" name="password" id="floatingPassword" class="mt-2 p-3 w-full border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500" placeholder="Password" required pattern="(?=.*[a-zA-Z])(?=.*\d).{6,}">
+            </div>
+
+            <!-- Location Input -->
+            <div>
+                <label for="floatingLocation" class="block text-sm font-medium text-gray-700">Location</label>
+                <input type="text" name="location" id="floatingLocation" class="mt-2 p-3 w-full border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500" placeholder="Location" required>
+            </div>
+
+            <!-- Phone Number Input -->
+            <div>
+                <label for="floatingPhone" class="block text-sm font-medium text-gray-700">Phone Number (10 digits only)</label>
+                <input type="tel" name="phone" id="floatingPhone" class="mt-2 p-3 w-full border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500" placeholder="1234567890" required pattern="\d{10}">
+            </div>
+
+            <!-- Remember Me Checkbox -->
+            <div class="flex items-center">
+                <input type="checkbox" class="h-4 w-4 text-blue-600 focus:ring-blue-500 border-gray-300 rounded" id="flexCheckDefault">
+                <label class="ml-2 text-sm text-gray-700" for="flexCheckDefault">Remember me</label>
+            </div>
+
+            <!-- Register Button -->
+            <button type="submit" class="w-full py-3 bg-blue-600 text-white rounded-md font-semibold hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-blue-500">Register</button>
+
+            <!-- Footer Links -->
+            <p class="mt-4 text-center text-sm text-gray-600">
+                <span>Already have an account? </span>
+                <a href="/login/" class="text-blue-600 hover:underline">Login</a>
+            </p>
+
+            <p class="mt-4 text-center text-xs text-gray-500">© 2017–2024</p>
+        </form>
+    </div>
+
+</body>
+
+</html>

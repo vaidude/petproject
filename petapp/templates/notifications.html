@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Notifications</title>
+    <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
+</head>
+<body class="bg-gray-100">
+
+<div class="flex flex-col items-center justify-center min-h-screen">
+    <div class="bg-white p-8 rounded-lg shadow-md w-full max-w-4xl">
+        <h2 class="text-2xl font-bold mb-6 text-center">Your Notifications</h2>
+        
+        {% if notifications %}
+            <ul class="space-y-4">
+                {% for notification in notifications %}
+                    <li class="p-4 border rounded-lg bg-white shadow-md {% if not notification.read %}bg-blue-50{% endif %}">
+                        <p class="text-lg">{{ notification.message }}</p>
+                        <small class="text-gray-500">{{ notification.created_at|date:"F j, Y, g:i a" }}</small>
+                    </li>
+                {% endfor %}
+            </ul>
+        {% else %}
+            <p class="text-center text-gray-600">No notifications found.</p>
+        {% endif %}
+    </div>
+
+
+</body>
+</html>

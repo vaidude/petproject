@@ -1,0 +1,93 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Pet List</title>
+
+    <!-- Tailwind CSS CDN -->
+    <script src="https://cdn.tailwindcss.com"></script>
+
+    <style>
+        /* Custom internal styles */
+        .pet-item {
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+        }
+        .pet-item:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+        }
+        .pet-card {
+            background-color: #ffffff;
+            border-radius: 8px;
+            padding: 20px;
+            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+            overflow: hidden;
+        }
+        .pet-card img {
+            border-radius: 8px;
+            object-fit: cover;
+        }
+        .action-links a {
+            color: #f44336;
+            text-decoration: none;
+            font-weight: bold;
+            transition: color 0.3s ease;
+        }
+        .action-links a:hover {
+            color: #d32f2f;
+        }
+        .page-title {
+            font-size: 2rem;
+            font-weight: 600;
+            margin-bottom: 20px;
+        }
+
+        .price-highlight {
+    color: #4CAF50; /* Green color for price */
+    font-size: 1.1rem;
+    font-weight: bold;
+}
+
+
+    </style>
+</head>
+<body class="bg-gray-50 text-gray-800 font-sans">
+    <div class="text-center mt-6">
+        <a href="{% url 'add_pet' %}" class="bg-blue-600 text-white px-6 py-2 rounded-lg hover:bg-blue-700 transition">Add a New Pet</a>
+    </div>
+
+    <!-- Page Title -->
+    <div class="container mx-auto px-4 py-6">
+        <h2 class="page-title text-center">Pet List</h2>
+
+        <!-- Pet List -->
+        <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
+            {% for pet in pets %}
+            <div class="pet-item">
+                <div class="pet-card">
+                    <img src="{{ pet.image.url }}" alt="{{ pet.name }}" class="w-full h-48 mb-4 object-cover">
+                    <div>
+                        <strong class="text-lg font-semibold">{{ pet.name }}</strong>
+                        <p class="text-sm text-gray-600">Age: {{ pet.age }}</p>
+                        <p class="text-sm text-gray-600">Gender: {{ pet.gender }}</p>
+                        <p class="text-sm text-gray-600">Color: {{ pet.color }}</p>
+                        <p class="text-sm text-gray-600">Breed: {{ pet.breed }}</p>
+                        <p class="text-sm text-gray-600">Price: <span class="price-highlight">${{ pet.price }}</span></p>
+                    </div>
+                    <div class="action-links mt-4 flex justify-between items-center">
+                        <a href="{% url 'delete_pet' pet.id %}" class="text-red-600 hover:text-red-800">Delete</a>
+                    </div>
+                </div>
+            </div>
+            {% endfor %}
+        </div>
+
+        <!-- Add Pet Button -->
+        <div class="text-center mt-6">
+            <a href="{% url 'shelterhome' %}" class="bg-blue-600 text-white px-6 py-2 rounded-lg hover:bg-blue-700 transition">Back to home</a>
+        </div>
+    </div>
+
+</body>
+</html>

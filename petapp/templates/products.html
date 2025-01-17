@@ -1,0 +1,91 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <meta name="description" content="">
+    <meta name="author" content="">
+    <link href="https://fonts.googleapis.com/css?family=Roboto:100,300,400,500,700" rel="stylesheet">
+    <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
+    <title>Pixie - Products</title>
+</head>
+
+<body class="bg-gray-100">
+    <nav class="bg-gray-800">
+        <div class="container mx-auto px-4 py-3 flex justify-between items-center">
+            <a class="text-white text-xl font-bold" href="#">A to z pets</a>
+            <div class="flex space-x-4">
+                <a class="text-white hover:bg-gray-700 px-3 py-2 rounded-md" href="/home/">Home</a>
+                <a class="text-white hover:bg-gray-700 px-3 py-2 rounded-md" href="/products/">Products</a>
+                <a class="text-white hover:bg-gray-700 px-3 py-2 rounded-md" href="/cart/">Cart</a>
+                <a class="text-white hover:bg-gray-700 px-3 py-2 rounded-md" href="/logout/">Logout</a>
+            </div>
+        </div>
+    </nav>
+
+    <div class="container mx-auto px-4 py-8">
+        <div class="mb-6">
+            <h1 class="text-2xl font-semibold">Featured Products</h1>
+        </div>
+
+        <div class="flex space-x-4 mb-6">
+            <form method="GET" action="" class="flex space-x-4">
+                <input type="text" name="search" placeholder="Search products (e.g., fox)" value="{{ request.GET.search|default:'' }}" class="border rounded-md px-4 py-2 w-full" />
+                <button type="submit" class="bg-blue-500 hover:bg-blue-600 text-white px-4 py-2 rounded-md">Search</button>
+            </form>
+            <div>
+                <a href="{% url 'products' %}" class="bg-blue-500 text-white px-4 py-2 rounded-md hover:bg-blue-600">All</a>
+                <a href="{% url 'products' %}?sort=low" class="bg-blue-500 text-white px-4 py-2 rounded-md hover:bg-blue-600">Low Price</a>
+                <a href="{% url 'products' %}?sort=high" class="bg-blue-500 text-white px-4 py-2 rounded-md hover:bg-blue-600">High Price</a>
+            </div>
+        </div>
+
+        <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4">
+            {% if products %}
+                {% for product in products %}
+                <div class="bg-white shadow rounded-lg overflow-hidden">
+                    <img src="{{ product.product_pic.url }}" alt="{{ product.productname }}" class="w-full h-48 object-cover">
+                    <div class="p-4">
+                        <h4 class="font-semibold">{{ product.productname }}</h4>
+                        <p class="text-gray-600">{{ product.brand }}</p>
+                        <h6 class="text-lg font-bold">₹{{ product.price }}</h6>
+                        <a href="{% url 'add_to_cart' product.id %}" class="bg-green-500 text-white py-2 px-4 rounded hover:bg-green-600">Add to Cart</a>
+                    </div>
+                </div>
+                {% endfor %}
+            {% else %}
+                <p class="col-span-3 text-center">No products found</p>
+            {% endif %}
+        </div>
+
+        <div class="mt-6">
+            <div class="flex justify-center">
+                <ul class="flex space-x-4">
+                    <li><a href="#" class="text-gray-500 hover:text-blue-500">1</a></li>
+                    <li><a href="#" class="text-gray-500 hover:text-blue-500">2</a></li>
+                    <li><a href="#" class="text-gray-500 hover:text-blue-500">3</a></li>
+                </ul>
+            </div>
+        </div>
+    </div>
+
+    <footer class="bg-gray-800 text-white py-6">
+        <div class="container mx-auto text-center">
+            <div class="logo mb-4">
+                <a href="/" class="text-white text-2xl font-bold">A to z pets</a>
+            </div>
+            <ul class="flex justify-center space-x-6">
+                <li><a class="hover:underline" href="#">Home</a></li>
+                <li><a class="hover:underline" href="#">Help</a></li>
+                <li><a class="hover:underline" href="#">Privacy Policy</a></li>
+                <li><a class="hover:underline" href="#">How It Works?</a></li>
+                <li><a class="hover:underline" href="#">Contact Us</a></li>
+            </ul>
+        </div>
+    </footer>
+
+</body>
+
+</html>

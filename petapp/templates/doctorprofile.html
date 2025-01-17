@@ -1,0 +1,143 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Doctor Profile</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <style>
+        .profile-card {
+            background-color: #2c3e50;
+            border-radius: 15px;
+            padding: 20px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+            max-width: 400px;
+            margin: auto;
+        }
+        .profile-card .title {
+            color: #ecf0f1;
+            font-size: 22px;
+            font-weight: bold;
+        }
+        .profile-card .field {
+            color: #bdc3c7;
+            font-size: 16px;
+        }
+        .edit-section {
+            display: none; /* Hidden by default */
+            margin-top: 20px;
+        }
+        .edit-section input {
+            width: 100%;
+            padding: 8px;
+            margin-bottom: 10px;
+            background-color: #34495e;
+            border: 1px solid #7f8c8d;
+            border-radius: 5px;
+            color: #ecf0f1;
+        }
+    </style>
+</head>
+<body class="bg-gray-900 min-h-screen flex items-center justify-center">
+
+    <div class="profile-card">
+        <a  href="/doctorhome/" class="text-blue-600 hover:underline">home</a>
+        <div class="title">
+            {{ user.name }}'s Profile
+        </div>
+        
+        <div class="flex justify-center mt-4">
+            {% if user.profile_pic %}
+                <img src="{{ user.profile_pic.url }}" alt="Profile Picture" class="w-32 h-32 rounded-full border-2 border-gray-500">
+            {% else %}
+                <div class="w-32 h-32 rounded-full bg-gray-500"></div>
+            {% endif %}
+        </div>
+
+        <div class="mt-4">
+            <p class="field"><strong>Email:</strong> {{ user.email }}</p>
+            <p class="field"><strong>Location:</strong> {{ user.location }}</p>
+            <p class="field"><strong>Phone:</strong> {{ user.phone }}</p>
+            <p class="field"><strong>Specialization:</strong> {{ user.specialization }}</p>
+            <p class="field"><strong>Qualifications:</strong> {{ user.qualifications }}</p>
+            <p class="field"><strong>Experience:</strong> {{ user.years_of_experience }} years</p>
+            <p class="field"><strong>Consultation Fee:</strong> ${{ user.consultation_fee }}</p>
+            <p class="field"><strong>Availability:</strong> {{ user.availability }}</p>
+        </div>
+        
+        <!-- Edit Section (Hidden by default) -->
+        
+        <div class="edit-section" id="edit-section">
+            
+            <h3 class="text-xl text-white">Edit Profile</h3>
+            <form method="POST" action="{% url 'editdoctorprofile' %}" enctype="multipart/form-data">
+                {% csrf_token %}
+                <label for="location" class="block text-gray-300">Location:</label>
+                <input type="text" id="location" name="location" value="{{ user.location }}">
+
+                <label for="phone" class="block text-gray-300">Phone:</label>
+                <input type="text" id="phone" name="phone" value="{{ user.phone }}">
+
+                <label for="specialization" class="block text-gray-300">Specialization:</label>
+                <input type="text" id="specialization" name="specialization" value="{{ user.specialization }}">
+
+                <label for="qualifications" class="block text-gray-300">Qualifications:</label>
+                <textarea id="qualifications" name="qualifications" rows="4">{{ user.qualifications }}</textarea>
+
+                <label for="years_of_experience" class="block text-gray-300">Years of Experience:</label>
+                <input type="number" id="years_of_experience" name="years_of_experience" value="{{ user.years_of_experience }}">
+
+                <label for="consultation_fee" class="block text-gray-300">Consultation Fee:</label>
+                <input type="number" step="0.01" id="consultation_fee" name="consultation_fee" value="{{ user.consultation_fee }}">
+
+                <label class="block text-gray-300">Availability (Select multiple days):</label>
+        
+        <div class="flex flex-wrap space-x-4">
+            <label class="text-gray-300">
+                <input type="checkbox" name="availability" value="MONDAY" {% if 'MONDAY' in user.availability %}checked{% endif %}> Monday
+            </label>
+            <label class="text-gray-300">
+                <input type="checkbox" name="availability" value="TUESDAY" {% if 'TUESDAY' in user.availability %}checked{% endif %}> Tuesday
+            </label>
+            <label class="text-gray-300">
+                <input type="checkbox" name="availability" value="WEDNESDAY" {% if 'WEDNESDAY' in user.availability %}checked{% endif %}> Wednesday
+            </label>
+            <label class="text-gray-300">
+                <input type="checkbox" name="availability" value="THURSDAY" {% if 'THURSDAY' in user.availability %}checked{% endif %}> Thursday
+            </label>
+            <label class="text-gray-300">
+                <input type="checkbox" name="availability" value="FRIDAY" {% if 'FRIDAY' in user.availability %}checked{% endif %}> Friday
+            </label>
+            <label class="text-gray-300">
+                <input type="checkbox" name="availability" value="SATURDAY" {% if 'SATURDAY' in user.availability %}checked{% endif %}> Saturday
+            </label>
+            <label class="text-gray-300">
+                <input type="checkbox" name="availability" value="SUNDAY" {% if 'SUNDAY' in user.availability %}checked{% endif %}> Sunday
+            </label>
+        </div>
+
+                <button type="submit" class="bg-teal-500 text-white py-2 px-4 rounded-lg mt-4 hover:bg-teal-600">Save Changes</button>
+            </form>
+        </div>
+
+        <div class="mt-6 flex justify-between">
+            <a href="javascript:void(0);" id="edit-btn" class="bg-teal-500 text-white py-2 px-4 rounded-lg hover:bg-teal-600 transition">Edit Profile</a>
+        </div>
+    </div>
+
+    <script>
+        const editButton = document.getElementById('edit-btn');
+        const editSection = document.getElementById('edit-section');
+
+        editButton.addEventListener('click', () => {
+            if (editSection.style.display === 'none' || editSection.style.display === '') {
+                editSection.style.display = 'block';
+                editButton.textContent = 'Cancel Editing';
+            } else {
+                editSection.style.display = 'none';
+                editButton.textContent = 'Edit Profile';
+            }
+        });
+    </script>
+</body>
+</html>

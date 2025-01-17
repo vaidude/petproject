@@ -1,0 +1,48 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Add Product</title>
+    <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
+</head>
+
+<body class="bg-gray-100">
+
+    <div class="flex flex-col items-center justify-center min-h-screen">
+        <div class="bg-white p-8 rounded-lg shadow-md w-full max-w-lg">
+            <h2 class="text-2xl font-bold mb-6 text-center">Add New Product</h2>
+            <form method="POST" enctype="multipart/form-data">
+                {% csrf_token %}
+                <div class="mb-4">
+                    <label for="productname" class="block text-sm font-medium text-gray-700">Product Name</label>
+                    <input type="text" name="productname" id="productname" required class="mt-1 p-2 border border-gray-300 rounded w-full">
+                </div>
+                
+                <div class="mb-4">
+                    <label for="price" class="block text-sm font-medium text-gray-700">Price</label>
+                    <input type="number" name="price" id="price" required class="mt-1 p-2 border border-gray-300 rounded w-full">
+                </div>
+                
+                <div class="mb-4">
+                    <label for="brand" class="block text-sm font-medium text-gray-700">Brand</label>
+                    <input type="text" name="brand" id="brand" required class="mt-1 p-2 border border-gray-300 rounded w-full">
+                </div>
+                
+                <div class="mb-4">
+                    <label for="product_pic" class="block text-sm font-medium text-gray-700">Product Image</label>
+                    <input type="file" name="product_pic" id="product_pic" accept="image/*" required class="mt-1 p-2 border border-gray-300 rounded w-full">
+                </div>
+                
+                <div>
+                    <button type="submit" class="w-full bg-blue-600 text-white py-2 rounded hover:bg-blue-700 transition duration-200">Add Product</button>
+                </div>
+            </form>
+        </div>
+    </div>
+
+</body>
+
+</html>

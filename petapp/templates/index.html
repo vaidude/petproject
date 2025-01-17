@@ -1,0 +1,185 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>A to Z Pet Care</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script src="https://cdn.jsdelivr.net/npm/alpinejs@2.8.2/dist/alpine.min.js" defer></script>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500&display=swap" rel="stylesheet">
+    <style>
+        body {
+            font-family: 'Poppins', sans-serif;
+        }
+        /* Custom carousel animations */
+        .carousel-container {
+            display: flex;
+            overflow: hidden;
+            scroll-behavior: smooth;
+        }
+
+        .carousel-inner {
+            display: flex;
+            animation: scroll-left 20s linear infinite;
+        }
+
+        .carousel-item {
+            flex: 0 0 100%;
+            width: 300px;
+            height: 200px;
+            object-fit: cover;
+            margin-right: 10px;
+        }
+
+        @keyframes scroll-left {
+            from {
+                transform: translateX(0);
+            }
+            to {
+                transform: translateX(-100%);
+            }
+        }
+    </style>
+</head>
+
+<body class="bg-gray-50">
+
+    <!-- Navbar -->
+    <nav class="bg-blue-600 text-white py-4 shadow-md">
+        <div class="max-w-7xl mx-auto flex justify-between items-center px-6">
+            <div class="text-xl font-bold">A to Z Pet Care</div>
+            <div class="hidden md:flex space-x-6">
+                <a href="#home" class="hover:text-gray-300">Home</a>
+
+                <!-- Register Dropdown -->
+                <div x-data="{ open: false }" class="relative">
+                    <button @click="open = !open" class="hover:text-gray-300">
+                        Register
+                    </button>
+                    <div x-show="open" x-transition class="absolute mt-2 w-48 bg-white text-black shadow-lg rounded-lg">
+                        <a href="/register/" class="block px-4 py-2 hover:bg-gray-100">As User</a>
+                        <a href="/shopregister/" class="block px-4 py-2 hover:bg-gray-100">As Shop</a>
+                        <a href="/shelterregister/" class="block px-4 py-2 hover:bg-gray-100">As Shelter</a>
+                        <a href="/doctorregister/" class="block px-4 py-2 hover:bg-gray-100">As Doctor</a>
+                    </div>
+                </div>
+
+                <!-- Login Dropdown -->
+                <div x-data="{ open: false }" class="relative">
+                    <button @click="open = !open" class="hover:text-gray-300">
+                        Login
+                    </button>
+                    <div x-show="open" x-transition class="absolute mt-2 w-48 bg-white text-black shadow-lg rounded-lg">
+                        <a href="/login/" class="block px-4 py-2 hover:bg-gray-100">As User</a>
+                        <a href="/shoplogin/" class="block px-4 py-2 hover:bg-gray-100">As Shop</a>
+                        <a href="/shelterlogin/" class="block px-4 py-2 hover:bg-gray-100">As Shelter</a>
+                        <a href="/doctorlogin/" class="block px-4 py-2 hover:bg-gray-100">As Doctor</a>
+                    </div>
+                </div>
+
+                <a href="/adlogin/" class="hover:text-gray-300">Admin</a>
+                <a href="#contact" class="hover:text-gray-300">Contact</a>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Main content -->
+    <section id="home" class="bg-cover bg-center h-96" style="background-image: url('https://i.pinimg.com/originals/be/91/62/be916268e15dac917271880bf684b569.jpg');">
+        <div class="flex items-center justify-center h-full bg-black bg-opacity-50">
+            <h1 class="text-4xl text-white font-bold">Welcome to the Best A to Z Pet Care</h1>
+            
+        </div>
+    </section>
+
+    <!-- Carousel Section -->
+    <section class="py-12 bg-gray-200" id="shop">
+        <div class="max-w-7xl mx-auto px-6">
+            <h2 class="text-3xl font-semibold text-center mb-6">Featured Pets</h2>
+            <div class="carousel-container">
+                <div class="carousel-inner">
+                    <img src="https://northernvirginiamag.com/wp-content/uploads/2021/12/petstore.jpg" alt="Pet Store" class="carousel-item">
+                    <img src="https://media.timeout.com/images/101793375/image.jpg" alt="Pet Store 2" class="carousel-item">
+                    <img src="https://i.pinimg.com/originals/7f/91/ef/7f91ef74ace96a27cba3ae2c6a907de1.jpg" alt="Pet Store 3" class="carousel-item">
+                    <img src="https://i.pinimg.com/originals/be/91/62/be916268e15dac917271880bf684b569.jpg" alt="Pet Store 4" class="carousel-item">
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Categories Section -->
+    <section id="categories" class="py-12">
+        <div class="max-w-7xl mx-auto px-6 text-center">
+            <h2 class="text-3xl font-semibold mb-8">Shop by Category</h2>
+            <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-8">
+                <div class="bg-white p-6 shadow-lg rounded-lg hover:shadow-2xl transition duration-300">
+                    <img src="https://www.bing.com/th/id/OGC.55f44048f02523086024c32f90be5681?pid=1.7&rurl=https%3a%2f%2fmedia1.tenor.com%2fimages%2f55f44048f02523086024c32f90be5681%2ftenor.gif%3fitemid%3d16482640&ehk=82AhB7qPDTnjg3xbtXpUSIW9SJPyS1jkbISc6NCT%2fJQ%3d"
+                        alt="Dog" class="w-full h-40 object-cover rounded-lg mb-4">
+                    <h3 class="text-lg font-semibold">Dogs</h3>
+                    <p class="text-gray-500">Find your furry best friend.</p>
+                    <a href="#dog-shop" class="text-blue-600 hover:text-blue-800">Browse Dogs</a>
+                </div>
+                <div class="bg-white p-6 shadow-lg rounded-lg hover:shadow-2xl transition duration-300">
+                    <img src="https://www.bing.com/th/id/OGC.9acbae7d438b0b793d362f9306d8547a?pid=1.7&rurl=https%3a%2f%2fwww.sheknows.com%2fwp-content%2fuploads%2f2018%2f12%2fbvvdvn1nbjxwnatynv7i.gif%3fw%3d600&ehk=7gbRbRAdSk%2f44Qsw%2bxCB6UziwBENtjA6vvuJW20KVyg%3d"
+                        alt="Cat" class="w-full h-40 object-cover rounded-lg mb-4">
+                    <h3 class="text-lg font-semibold">Cats</h3>
+                    <p class="text-gray-500">Explore our adorable cats.</p>
+                    <a href="#cat-shop" class="text-blue-600 hover:text-blue-800">Browse Cats</a>
+                </div>
+                <div class="bg-white p-6 shadow-lg rounded-lg hover:shadow-2xl transition duration-300">
+                    <img src="https://www.bing.com/th/id/OGC.c8ce49efbaec2061680dbb2383e37fc4?pid=1.7&rurl=http%3a%2f%2fmedia.giphy.com%2fmedia%2f2IodXMfbcVVrW%2fgiphy.gif&ehk=J5wgyYPmgcCSQQkZ4HqpNo%2fY%2b%2bILQfSYmWaX%2bXEsa2k%3d"
+                        alt="Rabbit" class="w-full h-40 object-cover rounded-lg mb-4">
+                    <h3 class="text-lg font-semibold">Rabbits</h3>
+                    <p class="text-gray-500">Cute and cuddly rabbits available.</p>
+                    <a href="#rabbit-shop" class="text-blue-600 hover:text-blue-800">Browse Rabbits</a>
+                </div>
+                <div class="bg-white p-6 shadow-lg rounded-lg hover:shadow-2xl transition duration-300">
+                    <img src="https://media.giphy.com/media/NouAM10vF55N6/200.gif" alt="Fish" class="w-full h-40 object-cover rounded-lg mb-4">
+                    <h3 class="text-lg font-semibold">Fish</h3>
+                    <p class="text-gray-500">Beautiful fish for your aquarium.</p>
+                    <a href="#fish-shop" class="text-blue-600 hover:text-blue-800">Browse Fish</a>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- About Us Section -->
+    <section id="about" class="py-12 bg-blue-600 text-white">
+        <div class="max-w-7xl mx-auto px-6">
+            <h2 class="text-3xl font-semibold text-center mb-6">About Us</h2>
+            <p class="text-center text-lg">At A to Z Pet Care, we believe that every pet deserves a loving and caring home. We provide a variety of pets from all over the world and ensure they are well cared for before they join your family. Our mission is to connect pets and families for a lifetime of happiness.</p>
+        </div>
+    </section>
+
+    <!-- Customer Reviews Section -->
+    <section id="reviews" class="py-12">
+        <div class="max-w-7xl mx-auto px-6 text-center">
+            <h2 class="text-3xl font-semibold mb-6">Customer Reviews</h2>
+            <div class="flex flex-wrap justify-center space-x-8">
+                <div class="bg-white p-6 shadow-lg rounded-lg max-w-xs">
+                    <p class="text-gray-500 italic">"The best experience! I found the perfect dog for our family."</p>
+                    <p class="text-blue-600 font-semibold mt-2">John Doe</p>
+                </div>
+                <div class="bg-white p-6 shadow-lg rounded-lg max-w-xs">
+                    <p class="text-gray-500 italic">"Our new kitten is so playful, we are so happy!"</p>
+                    <p class="text-blue-600 font-semibold mt-2">Jane Smith</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="bg-blue-600 text-white py-8">
+        <div class="max-w-7xl mx-auto px-6 flex justify-between items-center">
+            <div>&copy; 2024 A to Z Pet Care</div>
+            <div class="space-x-6">
+                <a href="#" class="hover:text-gray-300">Privacy Policy</a>
+                <a href="#" class="hover:text-gray-300">Terms of Service</a>
+                <a href="#" class="hover:text-gray-300">Contact Us</a>
+            </div>
+        </div>
+    </footer>
+
+</body>
+
+</html>

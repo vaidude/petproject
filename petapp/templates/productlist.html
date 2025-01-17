@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Product List</title>
+    <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
+</head>
+<body class="bg-gray-100">
+
+    <div class="flex flex-col items-center justify-center min-h-screen">
+        <div class="bg-white p-8 rounded-lg shadow-md w-full max-w-4xl">
+            <a href="/adhome/"
+                   class="hover-effect bg-red-500 text-white px-5 py-3 rounded-lg shadow transition w-full text-center text-lg">Home</a>
+            <h2 class="text-2xl font-bold mb-6 text-center">Product List</h2>
+            <table class="min-w-full bg-white border border-gray-300">
+                <thead>
+                    <tr class="bg-gray-200">
+                        <th class="py-2 px-4 border-b">ID</th>
+                        <th class="py-2 px-4 border-b">Product</th>
+                        <th class="py-2 px-4 border-b">Product Name</th>
+                        <th class="py-2 px-4 border-b">Price</th>
+                        <th class="py-2 px-4 border-b">Brand</th>
+                        <th class="py-2 px-4 border-b">Actions</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for product in prod %}
+                    <tr class="hover:bg-gray-100">
+                        <td class="py-2 px-4 border-b">{{ product.id }}</td>
+                        <td>
+                            <img src="{{ product.product_pic.url }}" alt="Product Picture" class="h-40 w-60 rounded-full object-cover">
+                        </td>
+                        <td class="py-2 px-4 border-b">{{ product.productname }}</td>
+                        <td class="py-2 px-4 border-b">${{ product.price }}</td>
+                        <td class="py-2 px-4 border-b">{{ product.brand }}</td>
+                        <td class="py-2 px-4 border-b">
+                            <form method="POST" action="{% url 'deleteproduct' product.id %}" style="display: inline;">
+                                {% csrf_token %}
+                                <button type="submit" class="text-red-600 hover:text-red-800">Delete</button>
+                            </form>
+                        </td>
+                    </tr>
+                    {% empty %}
+                    <tr>
+                        <td colspan="6" class="py-2 px-4 text-center">No products found.</td>
+                    </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+        </div>
+    </div>
+
+</body>
+</html>

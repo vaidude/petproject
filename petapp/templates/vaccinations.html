@@ -1,0 +1,97 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Pet Health Report Card</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+</head>
+<body class="bg-gray-100 font-sans flex items-center justify-center min-h-screen">
+
+    <!-- Main Container (Centered on page) -->
+    <div class="w-full max-w-4xl mx-auto p-6 bg-white rounded-lg shadow-lg border-t-4 border-pink-500">
+        <!-- Title -->
+        <h1 class="text-4xl font-bold text-gray-800 mb-6 text-center">Pet Health Report Card</h1>
+
+        <!-- Pet List Section -->
+        <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-2 lg:grid-cols-2 gap-6">
+            {% for pet in pets %}
+            <div class="bg-white rounded-lg shadow-lg p-6 border-t-4 border-pink-500">
+                <div class="text-center">
+                    <img src="{{ pet.image.url }}" alt="{{ pet.name }}" class="h-40 w-40 object-cover rounded-full mx-auto mb-4">
+                    <h2 class="text-2xl font-semibold text-gray-800">{{ pet.name }}</h2>
+                </div>
+
+                <div class="mt-4 space-y-2">
+                    <p class="text-gray-600"><strong>Age:</strong> {{ pet.age }} years</p>
+                    <p class="text-gray-600"><strong>Gender:</strong> {{ pet.gender }}</p>
+                    <p class="text-gray-600"><strong>Color:</strong> {{ pet.color }}</p>
+                    <p class="text-gray-600"><strong>Breed:</strong> {{ pet.breed }}</p>
+                </div>
+
+                <!-- Vaccination History -->
+                <div class="mt-6 border-t-2 pt-4">
+                    <h3 class="text-xl font-semibold text-gray-800 mb-4">Vaccination History</h3>
+                    {% with pet.vaccinations.all as pet_vaccinations %}
+                    {% if pet_vaccinations %}
+                        <div class="space-y-4">
+                            {% for vaccination in pet_vaccinations %}
+                            <div class="bg-gray-100 p-4 rounded-lg border">
+                                <div class="flex justify-between items-center">
+                                    <span class="text-lg font-semibold text-gray-800">{{ vaccination.vaccine_name }}</span>
+                                    <span class="text-sm text-gray-500">{{ vaccination.date_administered|date:"d M Y" }}</span>
+                                </div>
+                                <div class="text-sm text-gray-600">
+                                    <p><strong>Batch Number:</strong> {{ vaccination.batch_number }}</p>
+                                    <p><strong>Veterinarian:</strong> {{ vaccination.veterinarian }}</p>
+                                    <p><strong>Next Due Date:</strong> <span class="next-due-date" data-date="{{ vaccination.date_administered|date:'Y-m-d' }}"></span></p>
+                                </div>
+                            </div>
+                            {% endfor %}
+                        </div>
+                    {% else %}
+                        <p class="text-gray-500">No vaccination records found for {{ pet.name }}.</p>
+                    {% endif %}
+                    {% endwith %}
+                </div>
+
+                <div class="mt-4 text-center">
+                    <a href="{% url 'pet_detail' pet.id %}" 
+                       class="text-white bg-pink-500 hover:bg-pink-600 px-6 py-2 rounded-md shadow-lg text-lg">
+                        View Details
+                    </a>ㅤㅤㅤ
+                    <a href="{% url 'pet_insurance_view' pet.id %}" 
+                    class="text-white bg-pink-500 hover:bg-pink-600 px-6 py-2 rounded-md shadow-lg text-lg">
+                     Insurance
+                 </a>
+                </div>
+            </div>
+            {% empty %}
+            <p class="col-span-full text-gray-700 text-center">You have no pets added yet.</p>
+            <p class="col-span-full text-gray-700 text-center"><br>
+                <a href="/adduserpet/" class="hover-effect bg-blue-500 text-white px-2 py-1 rounded-lg shadow transition w-full text-center text-lg"><i class="fa-solid fa-arrow-up-right-from-square"></i> Add your Pet</a></p>
+            {% endfor %}
+        </div>
+
+    </div>
+
+    <script>
+        // Function to calculate and display the next due date for vaccinations
+        document.addEventListener("DOMContentLoaded", function () {
+            const elements = document.querySelectorAll(".next-due-date");
+            elements.forEach(el => {
+                const dateAdministered = new Date(el.dataset.date);
+                dateAdministered.setDate(dateAdministered.getDate() + 30);
+
+                // Format the date to "dd MMM yyyy"
+                const options = { year: 'numeric', month: 'short', day: 'numeric' };
+                const formattedDate = dateAdministered.toLocaleDateString('en-US', options);
+
+                el.textContent = formattedDate;
+            });
+        });
+    </script>
+
+</body>
+</html>

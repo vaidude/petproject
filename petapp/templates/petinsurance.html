@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Pet Insurance</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+</head>
+<body class="bg-gray-100 font-sans">
+
+    <div class="max-w-4xl mx-auto p-6 bg-white rounded-lg shadow-lg mt-10">
+        <h1 class="text-4xl font-bold text-gray-800 text-center mb-6">Pet Insurance for {{ pet.name }}</h1>
+
+        <!-- Show error message if any -->
+        {% if error %}
+            <div class="text-red-500 text-center mb-4">{{ error }}</div>
+        {% endif %}
+
+        <!-- Insurance Form -->
+        <form method="POST" action="{% url 'pet_insurance' pet.id %}" class="space-y-6">
+            {% csrf_token %}
+
+            <!-- Provider -->
+            <div class="mb-4">
+                <label for="provider" class="block text-lg font-semibold text-gray-700">Insurance Provider</label>
+                <input type="text" id="provider" name="provider" value="{{ insurance.provider }}" class="w-full p-2 border rounded-md" required>
+            </div>
+
+            <!-- Policy Number -->
+            <div class="mb-4">
+                <label for="policy_number" class="block text-lg font-semibold text-gray-700">Policy Number</label>
+                <input type="text" id="policy_number" name="policy_number" value="{{ insurance.policy_number }}" class="w-full p-2 border rounded-md" required>
+            </div>
+
+            <!-- Coverage -->
+            <div class="mb-4">
+                <label for="coverage" class="block text-lg font-semibold text-gray-700">Coverage Details</label>
+                <textarea id="coverage" name="coverage" rows="4" class="w-full p-2 border rounded-md" required>{{ insurance.coverage }}</textarea>
+            </div>
+
+            <!-- Start Date -->
+            <div class="mb-4">
+                <label for="start_date" class="block text-lg font-semibold text-gray-700">Start Date</label>
+                <input type="date" id="start_date" name="start_date" value="{{ insurance.start_date }}" class="w-full p-2 border rounded-md" required>
+            </div>
+
+            <!-- End Date -->
+            <div class="mb-4">
+                <label for="end_date" class="block text-lg font-semibold text-gray-700">End Date</label>
+                <input type="date" id="end_date" name="end_date" value="{{ insurance.end_date }}" class="w-full p-2 border rounded-md" required>
+            </div>
+
+            <!-- Price -->
+            <div class="mb-4">
+                <label for="price" class="block text-lg font-semibold text-gray-700">Price</label>
+                <input type="number" id="price" name="price" value="{{ insurance.price }}" class="w-full p-2 border rounded-md" required step="0.01">
+            </div>
+
+            <!-- Submit Button -->
+            <div class="text-center">
+                <button type="submit" class="px-6 py-2 bg-pink-500 text-white rounded-md hover:bg-pink-600">Submit Insurance</button>
+            </div>
+        </form>
+    </div>
+
+</body>
+</html>

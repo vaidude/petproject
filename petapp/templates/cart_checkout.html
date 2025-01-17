@@ -1,0 +1,83 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Checkout</title>
+    <!-- Bootstrap CSS -->
+    <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet">
+    <!-- Custom External CSS -->
+    <link rel="stylesheet" href="styles.css">
+    <!-- Internal CSS -->
+    <style>
+        body {
+            background-color: #f8f9fa;
+            font-family: 'Arial', sans-serif;
+        }
+        .checkout-container {
+            max-width: 500px;
+            margin: 100px auto;
+            padding: 30px;
+            background-color: #ffffff;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+            border-radius: 8px;
+            text-align: center;
+        }
+        #pay-btn {
+            width: 100%;
+            padding: 10px;
+            font-size: 18px;
+        }
+    </style>
+    <script src="https://checkout.razorpay.com/v1/checkout.js"></script>
+</head>
+<body>
+    <div class="checkout-container">
+        <h2>Your Total: ₹{{ total_price }}</h2>
+
+        <form id="payment-form" action="{% url 'cart_checkout' %}" method="POST">
+            {% csrf_token %}
+            <input type="hidden" name="razorpay_order_id" value="{{ razorpay_order_id }}">
+            <input type="hidden" name="razorpay_amount" value="{{ razorpay_amount }}">
+
+            <button type="button" id="pay-btn" class="btn btn-success">Pay ₹{{ total_price }}</button>
+        </form>
+    </div>
+
+    <!-- Bootstrap JS and dependencies -->
+    <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.1/dist/umd/popper.min.js"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+
+    <script>
+        var options = {
+            "key": "{{ razorpay_merchant_key }}",
+            "amount": "{{ razorpay_amount }}",
+            "currency": "INR",
+            "order_id": "{{ razorpay_order_id }}",
+            "prefill": {
+                "name": "{{ user.name }}",
+                "email": "{{ user.email }}"
+            },
+            "theme": {
+                "color": "#f1c40f"
+            },
+            "handler": function (response) {
+                var form = document.getElementById('payment-form');
+                var input_payment_id = document.createElement("input");
+                input_payment_id.setAttribute("type", "hidden");
+                input_payment_id.setAttribute("name", "razorpay_payment_id");
+                input_payment_id.setAttribute("value", response.razorpay_payment_id);
+                form.appendChild(input_payment_id);
+                form.submit();  // Submit form after payment success
+            }
+        };
+
+        var rzp1 = new Razorpay(options);
+        document.getElementById('pay-btn').onclick = function(e) {
+            rzp1.open();
+            e.preventDefault();
+        };
+    </script>
+</body>
+</html>

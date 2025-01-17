@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Appointments | Pet Appointment System</title>
+  
+  <!-- Tailwind CSS -->
+  <script src="https://cdn.tailwindcss.com"></script>
+
+  <!-- Font Awesome for Icons -->
+  <script src="https://kit.fontawesome.com/a076d05399.js"></script>
+
+  <!-- Custom Styles -->
+  <style>
+    body {
+      font-family: 'Arial', sans-serif;
+    }
+  </style>
+</head>
+<body class="bg-gray-50">
+  <div class="container mx-auto p-8 bg-white shadow-lg rounded-lg mt-10">
+    <div class="text-center">
+      <h1 class="text-3xl font-bold text-green-600 mb-4">Your Appointments</h1>
+      <p class="text-lg text-gray-600">Here are all your scheduled appointments:</p>
+    </div>
+
+    <!-- Check if there are any appointments -->
+    {% if appointment %}
+      <!-- Loop through each appointment -->
+      <div class="mt-6 space-y-6">
+        {% for appointment in appointment %}
+          <div class="p-6 bg-gray-100 rounded-lg shadow-lg">
+            <ul class="text-lg text-gray-700">
+              <li><strong>Pet Name:</strong> {{ appointment.pet_name }}</li>
+              <li><strong>Doctor:</strong> {{ appointment.doctor.name }} ({{ appointment.doctor.specialization }})</li>
+              <li><strong>Appointment Date:</strong> {{ appointment.appointment_date }}</li>
+              <li><strong>Pet Type:</strong> {{ appointment.pet_type }}</li>
+              <li><strong>Reason for Visit:</strong> {{ appointment.reason_for_visit }}</li>
+            </ul>
+          </div>
+        {% endfor %}
+      </div>
+    {% else %}
+      <div class="mt-6 p-6 bg-gray-100 rounded-lg shadow-lg">
+        <p class="text-lg text-red-600">You currently have no appointments scheduled.</p>
+      </div>
+    {% endif %}
+
+    <!-- Button to Book Another Appointment -->
+    <div class="flex justify-center mt-8">
+      <a href="{% url 'book_appointment' %}" class="bg-blue-600 text-white py-3 px-6 rounded-lg shadow-lg hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-blue-500">
+        <i class="fas fa-plus-circle mr-2"></i> Book Another Appointment
+      </a>
+    </div>
+  </div>
+
+  <!-- Footer Section -->
+  <footer class="bg-gray-800 text-white text-center py-4 mt-12">
+    <p>&copy; 2024 Pet Appointment System | All Rights Reserved</p>
+  </footer>
+</body>
+</html>

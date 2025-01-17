@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>My Shelter Bookings</title>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css">
+</head>
+<body class="bg-gray-100 text-gray-800">
+    <div class="container mx-auto p-8">
+        <h1 class="text-3xl font-bold mb-6">My Shelter Bookings</h1>
+
+        <!-- Check if bookings exist -->
+        {% if bookings %}
+        <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+            {% for booking in bookings %}
+            <!-- Booking Card -->
+            <div class="bg-white p-6 rounded shadow-md">
+                <h2 class="text-xl font-semibold mb-2">{{ booking.shelter.name }}</h2>
+                <p><strong>Location:</strong> {{ booking.shelter.location }}</p>
+                <p><strong>Contact:</strong> {{ booking.shelter.phone }}</p>
+                <p><strong>Booking Date:</strong> {{ booking.booking_date|date:"F d, Y H:i" }}</p>
+                <p><strong>Details:</strong> {{ booking.details|default:"No additional details provided." }}</p>
+            </div>
+            {% endfor %}
+        </div>
+        {% else %}
+        <!-- No Bookings Message -->
+        <div class="text-center bg-white p-6 rounded shadow-md">
+            <p class="text-gray-700">You have not booked any shelters yet.</p>
+            <a href="{% url 'shelter' %}" class="text-blue-500 hover:underline mt-4 inline-block">
+                View Available Shelters
+            </a>
+        </div>
+        {% endif %}
+    </div>
+</body>
+</html>
