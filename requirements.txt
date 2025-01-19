@@ -13,7 +13,7 @@ flatbuffers==24.12.23
 frozenlist==1.5.0
 gast==0.6.0
 google-pasta==0.2.0
-grpcio>=1.48.2  # Updated to satisfy TensorBoard's requirement
+grpcio>=1.48.2  # To match TensorBoard's requirement
 gunicorn==23.0.0
 h5py==3.12.1
 idna==3.10
@@ -26,7 +26,7 @@ mdurl==0.1.2
 ml-dtypes==0.4.1
 multidict==6.1.0
 namex==0.0.8
-numpy==1.24.3  # Compatible with TensorFlow and dependencies
+numpy>=1.26.0  # Increased version to match TensorFlow's requirement
 openai==0.28.0
 opt_einsum==3.4.0
 optree==0.14.0
