@@ -13,7 +13,7 @@ flatbuffers==24.12.23
 frozenlist==1.5.0
 gast==0.6.0
 google-pasta==0.2.0
-grpcio==1.47.0  # TensorFlow compatible version
+grpcio>=1.48.2  # Updated to satisfy TensorBoard's requirement
 gunicorn==23.0.0
 h5py==3.12.1
 idna==3.10
