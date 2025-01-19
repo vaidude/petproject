@@ -21,7 +21,7 @@ itsdangerous==2.1.1
 jdcal==1.4.1
 jedi==0.18.2
 Jinja2==3.1.2
-keras==2.15.0  # Updated to a compatible version
+keras==2.15.0  # Using a more compatible version with Python 3.11
 Markdown==3.3.7
 ml-dtypes==0.4.1
 numpy==1.26.0
@@ -42,9 +42,9 @@ scipy==1.9.3
 setuptools==65.5.0
 six==1.16.0
 tensorboard==2.18.0
-tensorflow==2.18.0
+tensorflow==2.15.0  # Switching to TensorFlow 2.15.0 for better Python 3.11 support
 tensorflow-datasets==4.9.0
-tensorflow-estimator==2.15.0  # Updated to a compatible version
+tensorflow-estimator==2.15.0  # Compatible with 2.15.0 for stability
 tensorflow-hub==0.13.0
 tensorflow-keras==2.18.0
 tensorflow-metadata==1.13.1
