@@ -27,6 +27,7 @@ DEBUG = True
 
 ALLOWED_HOSTS = ['*']
 
+CUDA_VISIBLE_DEVICES=0
 
 # Application definition
 
