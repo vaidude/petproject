@@ -90,7 +90,9 @@ class Pet(models.Model):
             super().save(*args, **kwargs)  # Save the object to generate an ID
 
         # Generate the pet detail URL for the QR code
-        pet_url = f"http://192.168.1.33:8000{reverse('pet_detail', args=[self.id])}"
+        # pet_url = f"http://192.168.1.33:8000{reverse('pet_detail', args=[self.id])}"
+        domain = "https://petproject-ehlx.onrender.com"
+        pet_url = f"{domain}{reverse('pet_detail', args=[self.id])}"
 
         # Check if a QR code already exists, remove the old file if present
         if self.qr_code and os.path.exists(self.qr_code.path):
@@ -206,7 +208,8 @@ class UserPet(models.Model):
             super().save(*args, **kwargs)  # Save the object to generate an ID
 
         # Generate the pet detail URL for the QR code
-        pet_url = f"http://192.168.1.33:8000{reverse('pet_detail', args=[self.id])}"
+        domain = "https://petproject-ehlx.onrender.com"
+        pet_url = f"{domain}{reverse('pet_detail', args=[self.id])}"
 
         # Check if a QR code already exists, remove the old file if present
         if self.qr_code and os.path.exists(self.qr_code.path):
